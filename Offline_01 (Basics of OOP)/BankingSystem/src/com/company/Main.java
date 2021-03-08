@@ -89,7 +89,7 @@ class Student extends Account{
             System.out.println("Can't withdraw more than 10000");
     }
     public void requestLoan(double amount, double internalFund){
-        if (amount <= 1000 || internalFund > amount){
+        if (amount <= 1000 && internalFund > amount){
             pendingLoan = amount;
             System.out.println("Loan request sent");
         }
@@ -143,6 +143,32 @@ class Employee{
             return fixedAccounts.get(index[1]).getAccountBalance();
         }
     }
+
+    public void viewLoan(List<Savings> savingsAccounts, List<Student> studentAccounts, List<FixedDiposit> fixedAccounts){
+        if (!employeeType.equals("officer") && !employeeType.equals("managingDirector")){
+            System.out.println("You don't have access");
+        }
+        else {
+            for(int i = 0; i<savingsAccounts.size(); i++){
+                Savings acc = savingsAccounts.get(i);
+                if (acc.getPendingLoan()>0)
+                    System.out.println(acc.getAccountName() + " - pending - " + acc.getPendingLoan());
+            }
+
+            for(int i = 0; i<studentAccounts.size(); i++){
+                Student acc = studentAccounts.get(i);
+                if (acc.getPendingLoan()>0)
+                    System.out.println(acc.getAccountName() + " - pending - " + acc.getPendingLoan());
+            }
+
+            for(int i = 0; i<fixedAccounts.size(); i++){
+                FixedDiposit acc = fixedAccounts.get(i);
+                if (acc.getPendingLoan()>0)
+                    System.out.println(acc.getAccountName() + " - pending - " + acc.getPendingLoan());
+            }
+        }
+    }
+
     public double approveLoan(int[] index, List<Savings> savingsAccounts, List<Student> studentAccounts, List<FixedDiposit> fixedAccounts){
         if (!employeeType.equals("officer") && !employeeType.equals("managingDirector")){
             System.out.println("You don't have access");
@@ -187,7 +213,7 @@ class Employee{
                 acc.setPaidLoan(acc.getPendingLoan());
                 acc.setPendingLoan(0);
                 acc.setAccountBalance(acc.getAccountBalance()+acc.getPaidLoan());
-                total =+ acc.getPaidLoan();
+                total += acc.getPaidLoan();
             }
 
             for(int i = 0; i<studentAccounts.size(); i++){
@@ -195,7 +221,7 @@ class Employee{
                 acc.setPaidLoan(acc.getPendingLoan());
                 acc.setPendingLoan(0);
                 acc.setAccountBalance(acc.getAccountBalance()+acc.getPaidLoan());
-                total =+ acc.getPaidLoan();
+                total += acc.getPaidLoan();
             }
 
             for(int i = 0; i<fixedAccounts.size(); i++){
@@ -203,7 +229,7 @@ class Employee{
                 acc.setPaidLoan(acc.getPendingLoan());
                 acc.setPendingLoan(0);
                 acc.setAccountBalance(acc.getAccountBalance()+acc.getPaidLoan());
-                total =+ acc.getPaidLoan();
+                total += acc.getPaidLoan();
             }
             System.out.println("All Loans Approved");
             return total;
@@ -229,7 +255,7 @@ class Employee{
     }
     public void seeInternalFund(double amount){
         if (employeeType.equals("managingDirector")){
-            System.out.println(amount);
+            System.out.println("Internal Fund = " + amount);
         }
         else
             System.out.println("You dont have access");
@@ -280,7 +306,6 @@ class Bank{
             acc.setAccountBalance(acc.getAccountBalance() + acc.getAccountBalance() * savingsInterestRate);
             acc.setAccountBalance(acc.getAccountBalance() - 500);
             acc.setAccountBalance(acc.getAccountBalance() - acc.getPaidLoan()*loanInterestRate);
-            acc.setPaidLoan(0);
         }
 
         for (int i=0; i<studentAccounts.size(); i++){
@@ -288,7 +313,6 @@ class Bank{
             acc.setAccountBalance(acc.getAccountBalance() + acc.getAccountBalance() * studentInterestRate);
             acc.setAccountBalance(acc.getAccountBalance());
             acc.setAccountBalance(acc.getAccountBalance() - acc.getPaidLoan()*loanInterestRate);
-            acc.setPaidLoan(0);
         }
 
         for (int i=0; i<fixedAccounts.size(); i++){
@@ -296,28 +320,40 @@ class Bank{
             acc.setAccountBalance(acc.getAccountBalance() + acc.getAccountBalance() * fixedInterestRate);
             acc.setAccountBalance(acc.getAccountBalance() - 500);
             acc.setAccountBalance(acc.getAccountBalance() - acc.getPaidLoan()*loanInterestRate);
-            acc.setPaidLoan(0);
         }
     }
 
     // Account Section Work
     public void createAccount(String name, String accountType, double initialDiposit){
-        if (accountType.equals("savings")){
-            Savings temp = new Savings(name, initialDiposit);
-            savingsAccounts.add(temp);
+        int []idx = getAccountIndex(name);
+        if(idx[0]==1 || idx[0]==2 || idx[0]==3){
+            System.out.println("Account Already Exists");
         }
-        else if (accountType.equals("student")){
-            Student temp = new Student(name, initialDiposit);
-            studentAccounts.add(temp);
-        }
-        else {
-            FixedDiposit temp = new FixedDiposit(name, initialDiposit);
-            fixedAccounts.add(temp);
+        else{
+            if (accountType.equals("savings")){
+                Savings temp = new Savings(name, initialDiposit);
+                savingsAccounts.add(temp);
+            }
+            else if (accountType.equals("student")){
+                Student temp = new Student(name, initialDiposit);
+                studentAccounts.add(temp);
+            }
+            else {
+                if (initialDiposit>=100000){
+                    FixedDiposit temp = new FixedDiposit(name, initialDiposit);
+                    fixedAccounts.add(temp);
+                }
+                else {
+                    System.out.println("Invalid Initial Diposit");
+                }
+            }
         }
     }
     public int[] getAccountIndex(String accountName){
         String account = "none";
         int[] index = new int[2];
+        index[0] = -1;
+        index[1] = -1;
         if (account.equals("none")){
             for (int i=0; i<savingsAccounts.size(); i++){
                 if (savingsAccounts.get(i).getAccountName().equals(accountName)){
@@ -350,6 +386,12 @@ class Bank{
         }
         return index;
     }
+    public void loginAccount(String accountName){
+        int[] idx = getAccountIndex(accountName);
+        if(idx[0]==1 || idx[0]==2 || idx[0]==3){
+            System.out.println("Welcome Back " + accountName);
+        }
+    }
     public void depositMoney(String accountName, double amount){
         int[] index = getAccountIndex(accountName);
         if (index[0]==1){
@@ -371,22 +413,29 @@ class Bank{
             studentAccounts.get(index[1]).withdrawMoney(amount);
         }
         else{
-            fixedAccounts.get(index[1]).withdrawMoney(amount);
+            if (clock>=1){
+                fixedAccounts.get(index[1]).withdrawMoney(amount);
+            }
+            else
+                System.out.println("Wait for Maturity Period");
         }
     }
     public void checkBalance(String accountName){
         int[] index = getAccountIndex(accountName);
         if (index[0]==1){
             double balance = savingsAccounts.get(index[1]).getAccountBalance();
-            System.out.println(balance);
+            System.out.println("Current Balance " + balance + " , Loan " + savingsAccounts.get(index[1]).getPaidLoan());
         }
         else if (index[0]==2){
             double balance = studentAccounts.get(index[1]).getAccountBalance();
-            System.out.println(balance);
+            System.out.println("Current Balance " + balance + " , Loan " + studentAccounts.get(index[1]).getPaidLoan());
+        }
+        else if (index[0]==3){
+            double balance = fixedAccounts.get(index[1]).getAccountBalance();
+            System.out.println("Current Balance " + balance + " , Loan " + fixedAccounts.get(index[1]).getPaidLoan());
         }
         else{
-            double balance = fixedAccounts.get(index[1]).getAccountBalance();
-            System.out.println(balance);
+            System.out.println("Something Invalid");
         }
     }
     public void requestLoan(String accountName, double amount){
@@ -406,7 +455,25 @@ class Bank{
     public void lookUp(String accountName, String who){
         int[] index = getAccountIndex(accountName);
         double ans = O1.lookUp(index, savingsAccounts, studentAccounts, fixedAccounts);
-        System.out.println(ans);
+        System.out.println("Account Balance of "+ accountName + " is " +ans);
+    }
+
+    public void viewLoan(String who){
+        if (who.equals("MD")){
+            System.out.println("Pending Loans : ");
+            MD.viewLoan(savingsAccounts, studentAccounts, fixedAccounts);
+        }
+        else if(who.charAt(0) == 'O'){
+            System.out.println("Pending Loans : ");
+            O1.viewLoan(savingsAccounts, studentAccounts, fixedAccounts);
+        }
+        else if (who.charAt(0) == 'C'){
+            System.out.println("Pending Loans : ");
+            C1.viewLoan(savingsAccounts, studentAccounts, fixedAccounts);
+        }
+        else {
+            System.out.println("You don’t have permission for this operation");
+        }
     }
     public void approveLoan(String accountName, String who){
         int[] index = getAccountIndex(accountName);
@@ -469,13 +536,13 @@ public class Main {
             String accountName;
             if (commands[0].toString().equals("Create")){
                 accountName = commands[1].toString();
-                bank.createAccount(accountName, commands[2].toString(), Double.parseDouble(commands[3].toString()));
-                bank.checkBalance(commands[1].toString());
+                bank.createAccount(accountName, commands[2].toLowerCase(), Double.parseDouble(commands[3].toString()));
                 current = accountName;
             }
 
             if (commands[0].equals("Open")) {
                 current = commands[1];
+                bank.loginAccount(current);
             }
 
             if (commands[0].toString().equals("Diposit")){
@@ -502,6 +569,9 @@ public class Main {
 
             if (current.equals("O1") || current.equals("O2") || current.equals("C1") || current.equals("C2") || current.equals("C3")  || current.equals("C4")  || current.equals("C5") || current.equals("MD")){
 
+                if(!current.equals("none"))
+                    System.out.println(current + " Active");
+                bank.viewLoan(current);
                 if (commands[0].toString().equals("Approve") && commands[1].equals("Loan")){
                     bank.approveAllLoan(current);
                 }
@@ -509,7 +579,7 @@ public class Main {
                     bank.approveLoan(commands[1], current);
                 }
                 else if (commands[0].toString().equals("Change")){
-                    bank.changeInterestRate(commands[1], Double.parseDouble(commands[2].toString()), current);
+                    bank.changeInterestRate(commands[1].toLowerCase(), Double.parseDouble(commands[2].toString()), current);
                 }
                 else if (commands[0].toString().equals("Lookup")){
                     bank.lookUp(commands[1], current);
@@ -520,6 +590,7 @@ public class Main {
             }
 
             if (commands[0].equals("Close")){
+                System.out.println("User Logged Out");
                 current = "none";
             }
 
@@ -529,3 +600,27 @@ public class Main {
         }
     }
 }
+
+/*
+Syntax to use :
+    Account Holder:
+        Create yourName accountType initialDiposit
+        Create kkp Student 10000
+        Close
+        Open kkp
+        Query
+        Diposit 1000
+        Withdraw 1000
+        Request 1000
+        Close
+
+    Employee:
+        Open MD / Open O1 / Open O2 / Open C1 / Open C2 .... C5
+        Lookup accountName
+        Approve Loan  (Approve All Loans)
+        Approve accountName (Approve by name)
+        See (Internal Fund)
+        Change accoutType interest
+        INC (yearClock++)
+        Close
+ */
