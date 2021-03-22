@@ -1,28 +1,22 @@
 package com.company;
 
-public class SyntaxHighlighter {
-    String languageName;
+public abstract class SyntaxHighlighter {
     LanguageFactory lf;
+    Aesthetics at;
+    Parser ps;
 
-    SyntaxHighlighter(String languageName){
-        this.languageName = languageName;
+    SyntaxHighlighter(){
         lf = null;
+        at = null;
+        ps = null;
     }
 
-    public LanguageFactory GetSyntaxHighlighted(){
-        if (languageName.equalsIgnoreCase("C")){
-            lf = new CLanguageFactory();
-            lf.createAesthetics();
-            lf.createParser();
-        }else if (languageName.equalsIgnoreCase("CPP")){
-            lf = new CLanguageFactory();
-            lf.createAesthetics();
-            lf.createParser();
-        }else if (languageName.equalsIgnoreCase("Python")){
-            lf = new CLanguageFactory();
-            lf.createAesthetics();
-            lf.createParser();
-        }
-        return lf;
+    public abstract void SetSyntaxHighlighted();
+    public void GetSyntaxHighlighted(){
+        at.GetFont();
+        at.GetStyle();
+        at.GetColor();
+
+        ps.Parse();
     }
 }
