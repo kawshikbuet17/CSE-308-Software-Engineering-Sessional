@@ -8,7 +8,9 @@ public class Main {
         System.out.println("hello world");
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
-        SyntaxHighlighter sh = new SyntaxHighlighter(input);
+        CodeEditor ce = new CodeEditor(input);
+        SyntaxHighlighter sh = ce.GetHighlighted();
+        sh.SetSyntaxHighlighted();
         sh.GetSyntaxHighlighted();
     }
 }

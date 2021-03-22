@@ -1,10 +1,25 @@
 package com.company;
 
-public class CSyntaxHighlighter extends SyntaxHighlighter{
+public class CSyntaxHighlighter implements SyntaxHighlighter{
+    LanguageFactory lf;
+    Aesthetics at;
+    Parser ps;
     @Override
     public void SetSyntaxHighlighted() {
         lf = new CLanguageFactory();
-        at = new CAesthetics();
-        ps = new CParser();
+        at = lf.createAesthetics();
+        ps = lf.createParser();
+
+        at.SetFont();
+        at.SetStyle();
+        at.SetColor();
+    }
+
+    @Override
+    public void GetSyntaxHighlighted() {
+        at.GetFont();
+        at.GetStyle();
+        at.GetColor();
+        ps.Parse();
     }
 }

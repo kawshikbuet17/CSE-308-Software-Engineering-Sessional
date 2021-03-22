@@ -1,22 +1,8 @@
 package com.company;
 
-public abstract class SyntaxHighlighter {
-    LanguageFactory lf;
-    Aesthetics at;
-    Parser ps;
+public interface SyntaxHighlighter {
 
-    SyntaxHighlighter(){
-        lf = null;
-        at = null;
-        ps = null;
-    }
 
-    public abstract void SetSyntaxHighlighted();
-    public void GetSyntaxHighlighted(){
-        at.GetFont();
-        at.GetStyle();
-        at.GetColor();
-
-        ps.Parse();
-    }
+    public void SetSyntaxHighlighted();
+    public void GetSyntaxHighlighted();
 }

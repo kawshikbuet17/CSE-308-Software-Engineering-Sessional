@@ -7,12 +7,12 @@ public class PythonAesthetics implements Aesthetics{
 
     @Override
     public void SetFont() {
-        this.font = "Consolas";
+        this.font = "Python Font : Consolas";
     }
 
     @Override
     public void SetStyle() {
-        this.font = "Python Style : Normal";
+        this.style = "Python Style : Normal";
     }
 
     @Override

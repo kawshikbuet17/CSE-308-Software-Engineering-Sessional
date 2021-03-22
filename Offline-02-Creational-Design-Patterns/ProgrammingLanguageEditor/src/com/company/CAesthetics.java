@@ -7,12 +7,12 @@ public class CAesthetics implements Aesthetics{
 
     @Override
     public void SetFont() {
-        this.font = "Courier New";
+        this.font = "C Font : Courier New";
     }
 
     @Override
     public void SetStyle() {
-        this.font = "C Style : Normal";
+        this.style = "C Style : Normal";
     }
 
     @Override

@@ -7,12 +7,12 @@ public class CppAesthetics implements Aesthetics{
 
     @Override
     public void SetFont() {
-        this.font = "Monaco";
+        this.font = "Cpp Font : Monaco";
     }
 
     @Override
     public void SetStyle() {
-        this.font = "Cpp Style : Normal";
+        this.style = "Cpp Style : Normal";
     }
 
     @Override
