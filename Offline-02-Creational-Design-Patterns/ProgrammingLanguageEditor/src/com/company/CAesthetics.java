@@ -21,17 +21,17 @@ public class CAesthetics implements Aesthetics{
     }
 
     @Override
-    public String GetFont() {
-        return font;
+    public void GetFont() {
+        System.out.println(font);
     }
 
     @Override
-    public String GetStyle() {
-        return style;
+    public void GetStyle() {
+        System.out.println(style);
     }
 
     @Override
-    public String GetColor() {
-        return color;
+    public void GetColor() {
+        System.out.println(color);
     }
 }
