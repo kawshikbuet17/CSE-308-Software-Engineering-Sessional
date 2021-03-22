@@ -1,4 +1,6 @@
 package com.company;
 
-public abstract class LanguageFactory {
+public interface LanguageFactory {
+    Aesthetics createAesthetics();
+    Parser createParser();
 }
