@@ -1,5 +1,8 @@
 package com.company;
 
+import codeEditorPackage.CodeEditor;
+import syntaxHighlighterPackage.SyntaxHighlighter;
+
 import java.util.Scanner;
 
 public class Main {
