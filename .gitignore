@@ -1,2 +1,5 @@
 *.class
 *.xml
+*.iml
+Offline-03-Structural-Design-Patterns/CalculateSum/.idea/
+
