@@ -4,15 +4,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class DecimalSum implements CalculateSum{
+public class DecimalSum implements Sum {
     int decimalSum;
 
-    public DecimalSum() {
-        this.decimalSum = 0;
-    }
-
-    @Override
-    public void getFile(File fileObj) {
+    public DecimalSum(File fileObj) {
+        decimalSum = 0;
         try (Scanner sc = new Scanner(fileObj)) {
             while (sc.hasNext()){
                 int a = sc.nextInt();
