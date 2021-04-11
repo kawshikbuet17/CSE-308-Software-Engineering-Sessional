@@ -3,11 +3,11 @@ package com.company;
 public class Coke extends Drinks{
     @Override
     public String prepareFood() {
-        return null;
+        return "Coke";
     }
 
     @Override
     public double foodPrice() {
-        return 0;
+        return 30;
     }
 }
