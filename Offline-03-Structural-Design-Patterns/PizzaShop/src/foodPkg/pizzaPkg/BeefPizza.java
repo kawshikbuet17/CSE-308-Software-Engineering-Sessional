@@ -1,4 +1,4 @@
-package com.company;
+package foodPkg.pizzaPkg;
 
 public class BeefPizza extends Pizza{
     @Override

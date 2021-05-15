@@ -1,4 +1,4 @@
-package com.company;
+package foodPkg.appentizerPkg;
 
 public class FrenchFries extends Appetizers{
     @Override

@@ -1,4 +1,4 @@
-package com.company;
+package foodPkg.drinksPkg;
 
 public class Coffee extends Drinks{
     @Override

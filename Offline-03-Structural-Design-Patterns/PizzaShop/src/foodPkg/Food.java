@@ -1,4 +1,4 @@
-package com.company;
+package foodPkg;
 
 public interface Food {
     String prepareFood();

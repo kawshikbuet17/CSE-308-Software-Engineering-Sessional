@@ -1,6 +1,8 @@
-package com.company;
+package foodPkg.decoratorPkg;
 
-public abstract class PizzaDecorator implements Food{
+import foodPkg.Food;
+
+public class PizzaDecorator implements Food {
     private Food newFood;
 
     public PizzaDecorator(Food newFood) {
