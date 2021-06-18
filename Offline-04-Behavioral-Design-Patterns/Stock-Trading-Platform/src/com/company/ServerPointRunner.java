@@ -31,7 +31,8 @@ public class ServerPointRunner {
             Socket connectionSocket = welcomeSocket.accept();
             userCount++;
             System.out.println("user"+userCount + " connected");
-            MultiThreading t1 = new MultiThreading(connectionSocket, stocks);
+            User currentUser = new User("user"+userCount);
+            MultiThreading t1 = new MultiThreading(connectionSocket, stocks, currentUser);
             t1.start();
         }
     }

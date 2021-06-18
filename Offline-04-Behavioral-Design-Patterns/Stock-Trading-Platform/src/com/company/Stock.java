@@ -17,6 +17,36 @@ public class Stock implements IStock{
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getCount() {
+        return count;
+    }
+
+    @Override
+    public double getPrice() {
+        return price;
+    }
+
+    @Override
+    public void IncreasePrice(double d) {
+        this.price += d;
+    }
+
+    @Override
+    public void DecreasePrice(double d) {
+        this.price-=d;
+    }
+
+    @Override
+    public void ChangeCount(int i) {
+        this.count = i;
+    }
+
+    @Override
     public void Register(User u) {
         subscriber.add(u);
         u.Update(name, price);

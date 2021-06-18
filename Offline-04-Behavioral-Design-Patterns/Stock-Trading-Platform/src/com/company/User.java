@@ -17,8 +17,8 @@ public class User implements IUser{
     }
 
     @Override
-    public void Update(String s, double d) {
-        System.out.println("Stock " + s + ", current price = " + String.valueOf(d));
+    public String Update(String s, double d) {
+        return "Stock " + s + ", current price = " + String.valueOf(d);
     }
 
 }
