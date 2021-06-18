@@ -7,10 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ServerPointRunner {
+public class Server {
+    public static List<Stock> stocks;
+    public static List<Socket> connectionSockets;
+    public static List<User> users;
     public static void main(String[] args) throws Exception {
         File fileObj = new File("stock.txt");
-        List<Stock> stocks = new ArrayList<Stock>();
+        stocks = new ArrayList<Stock>();
         try {
             Scanner sc = new Scanner(fileObj);
             while (sc.hasNextLine()){
@@ -25,15 +28,19 @@ public class ServerPointRunner {
         }
 
         ServerSocket welcomeSocket = new ServerSocket(6789);
-
+        connectionSockets = new ArrayList<>();
+        users = new ArrayList<>();
         int userCount = 0;
+
         while(true){
             Socket connectionSocket = welcomeSocket.accept();
+            connectionSockets.add(connectionSocket);
             userCount++;
             System.out.println("user"+userCount + " connected");
             User currentUser = new User("user"+userCount);
-            MultiThreading t1 = new MultiThreading(connectionSocket, stocks, currentUser);
-            t1.start();
+            users.add(currentUser);
+            ServerThreadForRead stfr = new ServerThreadForRead(connectionSocket, currentUser);
+            stfr.start();
         }
     }
 }

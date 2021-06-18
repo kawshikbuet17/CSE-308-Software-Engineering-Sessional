@@ -9,5 +9,5 @@ public interface IStock {
     void ChangeCount(int i);
     void Register(User u);
     void UnRegister(User u);
-    void NofifySubscribers(double updatedValue);
+    void NofifySubscribers();
 }

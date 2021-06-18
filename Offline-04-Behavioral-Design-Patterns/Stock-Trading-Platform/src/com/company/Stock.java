@@ -34,11 +34,13 @@ public class Stock implements IStock{
     @Override
     public void IncreasePrice(double d) {
         this.price += d;
+        NofifySubscribers();
     }
 
     @Override
     public void DecreasePrice(double d) {
         this.price-=d;
+        NofifySubscribers();
     }
 
     @Override
@@ -49,7 +51,6 @@ public class Stock implements IStock{
     @Override
     public void Register(User u) {
         subscriber.add(u);
-        u.Update(name, price);
     }
 
     @Override
@@ -58,9 +59,13 @@ public class Stock implements IStock{
     }
 
     @Override
-    public void NofifySubscribers(double updatedValue) {
+    public void NofifySubscribers() {
         for(int i=0; i< subscriber.size(); i++){
-            subscriber.get(i).Update(name, updatedValue);
+            subscriber.get(i).Update(this);
         }
+    }
+
+    public List<User> getSubscriber(){
+        return subscriber;
     }
 }

@@ -1,10 +1,12 @@
 package com.company;
 
 public class User implements IUser{
-    private String name;
+    public String name;
+    private String notifications;
 
     public User(String name) {
         this.name = name;
+        notifications = "";
     }
     @Override
     public void Subscribe(Stock s) {
@@ -17,8 +19,15 @@ public class User implements IUser{
     }
 
     @Override
-    public String Update(String s, double d) {
-        return "Stock " + s + ", current price = " + String.valueOf(d);
+    public String getNotifications(){
+        String temp = notifications;
+        notifications = "";
+        return temp;
     }
 
+    @Override
+    public void Update(Stock s) {
+        String temp = "Stock " + s.getName() + ", current price = " + s.getPrice();
+        notifications+= temp;
+    }
 }
