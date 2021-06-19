@@ -8,6 +8,10 @@ public class User implements IUser{
         this.name = name;
         notifications = "";
     }
+
+    public String getName(){
+        return name;
+    }
     @Override
     public void Subscribe(Stock s) {
         s.Register(this);

@@ -31,7 +31,8 @@ public class Server {
         connectionSockets = new ArrayList<>();
         users = new ArrayList<>();
         int userCount = 0;
-
+//        NotificationThread nt = new NotificationThread();
+//        nt.start();
         while(true){
             Socket connectionSocket = welcomeSocket.accept();
             connectionSockets.add(connectionSocket);
