@@ -46,6 +46,7 @@ public class Stock implements IStock{
     @Override
     public void ChangeCount(int i) {
         this.count = i;
+        NofifySubscribers();
     }
 
     @Override
@@ -63,9 +64,5 @@ public class Stock implements IStock{
         for(int i=0; i< subscriber.size(); i++){
             subscriber.get(i).Update(this);
         }
-    }
-
-    public List<User> getSubscriber(){
-        return subscriber;
     }
 }

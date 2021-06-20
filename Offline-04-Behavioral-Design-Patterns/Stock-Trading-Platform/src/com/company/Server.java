@@ -27,18 +27,18 @@ public class Server {
             e.printStackTrace();
         }
 
-        ServerSocket welcomeSocket = new ServerSocket(6789);
+        ServerSocket welcomeSocket = new ServerSocket(1705);
         connectionSockets = new ArrayList<>();
         users = new ArrayList<>();
         int userCount = 0;
-//        NotificationThread nt = new NotificationThread();
-//        nt.start();
+        NotificationThread nt = new NotificationThread();
+        nt.start();
         while(true){
             Socket connectionSocket = welcomeSocket.accept();
             connectionSockets.add(connectionSocket);
             userCount++;
             System.out.println("user"+userCount + " connected");
-            User currentUser = new User("user"+userCount);
+            User currentUser = new User("user"+userCount, connectionSocket);
             users.add(currentUser);
             ServerThreadForRead stfr = new ServerThreadForRead(connectionSocket, currentUser);
             stfr.start();

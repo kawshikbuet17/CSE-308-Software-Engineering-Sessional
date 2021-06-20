@@ -19,6 +19,7 @@ public class ClientThreadForRead extends Thread {
                 modifiedSentence = inFromServer.readLine();
                 System.out.print(">>");
                 System.out.println(modifiedSentence);
+                System.out.flush();
             }
         } catch (IOException e) {
             e.printStackTrace();

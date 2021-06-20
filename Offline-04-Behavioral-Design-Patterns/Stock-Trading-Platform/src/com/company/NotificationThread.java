@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class NotificationThread extends Thread{
+    String toClientSentence;
     @Override
     public void run(){
         while (true){
             try{
-                ContinuousNotification();
                 Scanner sc = new Scanner(System.in);
                 String input;
                 input = sc.nextLine();
@@ -32,12 +32,10 @@ public class NotificationThread extends Thread{
             }
         }
     }
-
     public void IncreasePrice(String[] arr) throws IOException {
         for(int i = 0; i< Server.stocks.size(); i++){
             if(Server.stocks.get(i).getName().equalsIgnoreCase(arr[1])){
                 Server.stocks.get(i).IncreasePrice(Double.parseDouble(arr[2]));
-
             }
         }
     }
@@ -53,17 +51,6 @@ public class NotificationThread extends Thread{
         for(int i = 0; i< Server.stocks.size(); i++){
             if(Server.stocks.get(i).getName().equalsIgnoreCase(arr[1])){
                 Server.stocks.get(i).ChangeCount(Integer.parseInt(arr[2]));
-            }
-        }
-    }
-
-    public void ContinuousNotification() throws IOException {
-        for(int j = 0; j< Server.connectionSockets.size(); j++){
-            String notification = Server.users.get(j).getNotifications();
-            if(notification.length() != 0){
-                System.out.println(notification);
-                DataOutputStream outToClientEach = new DataOutputStream(Server.connectionSockets.get(j).getOutputStream());
-                outToClientEach.writeBytes(notification);
             }
         }
     }
