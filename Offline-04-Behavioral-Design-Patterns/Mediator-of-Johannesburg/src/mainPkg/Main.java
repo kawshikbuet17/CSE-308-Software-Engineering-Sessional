@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Organization []organization;
         Mediator mediator;
-        String []Services = {"WATER", "ENERGY", "TRANSPORT", "TELECOM", "SERVE"};
+        String []Services = {"WATER", "POWER", "TRANSPORT", "TELECOM", "SERVE"};
         String []Orgs = {"JWSA", "JPDC", "JRTA", "JTRC"};
 
         Scanner sc = new Scanner(System.in);

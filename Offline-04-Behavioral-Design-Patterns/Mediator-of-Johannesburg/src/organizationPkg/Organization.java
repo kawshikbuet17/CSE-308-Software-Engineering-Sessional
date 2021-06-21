@@ -26,8 +26,13 @@ abstract public class Organization {
     }
 
     public void Serve(){
-        pending.remove();
-        mediator.notify(service, this);
+        if(!pending.isEmpty()){
+            pending.remove();
+            mediator.notify(service, this);
+        }
+        else{
+            System.out.println("< Queue Empty >");
+        }
     }
 
     public void sendRequest(Service service){
