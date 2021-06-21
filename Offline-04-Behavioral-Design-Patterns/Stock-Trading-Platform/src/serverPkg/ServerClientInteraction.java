@@ -25,14 +25,19 @@ public class ServerClientInteraction extends Thread{
         outToClient = new PrintWriter(connectionSocket.getOutputStream());
     }
 
+    public void SendStockList(){
+        for(int i=0; i<Server.stocks.size(); i++){
+            String msg = "Stock "+Server.stocks.get(i).getName()+" Count "+Server.stocks.get(i).getCount()+" Price "+Server.stocks.get(i).getPrice();
+            SendFeedBack(msg);
+        }
+    }
+
     public void Subscribe(String[] arr) throws IOException {
         for(int i = 0; i< Server.stocks.size(); i++){
             if(Server.stocks.get(i).getName().equalsIgnoreCase(arr[1])){
                 currentUser.Subscribe(Server.stocks.get(i));
                 sendToClient = "Subscribed to Stock "+ Server.stocks.get(i).getName()+'\n';
-                System.out.println(currentUser.getName()+" "+ sendToClient);
-                outToClient.println(sendToClient);
-                outToClient.flush();
+                SendFeedBack(sendToClient);
             }
         }
     }
@@ -42,14 +47,18 @@ public class ServerClientInteraction extends Thread{
             if(Server.stocks.get(i).getName().equalsIgnoreCase(arr[1])){
                 currentUser.UnSubscribe(Server.stocks.get(i));
                 sendToClient = "UnSubscribed from Stock "+ Server.stocks.get(i).getName()+'\n';
-                System.out.println(currentUser.getName()+" "+ sendToClient);
-                outToClient.println(sendToClient);
-                outToClient.flush();
+                SendFeedBack(sendToClient);
             }
         }
     }
 
+    public void SendFeedBack(String msg){
+        outToClient.println(msg);
+        outToClient.flush();
+    }
+
     public void run() {
+        SendStockList();
         while(true){
             try {
                 receiveFromClient = inFromClient.readLine();
