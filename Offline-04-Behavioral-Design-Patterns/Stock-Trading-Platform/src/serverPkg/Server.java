@@ -1,4 +1,7 @@
-package com.company;
+package serverPkg;
+
+import stockPkg.Stock;
+import userPkg.User;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -31,8 +34,10 @@ public class Server {
         connectionSockets = new ArrayList<>();
         users = new ArrayList<>();
         int userCount = 0;
-        NotificationThread nt = new NotificationThread();
-        nt.start();
+
+        ServerInputThread serverInputThread = new ServerInputThread();
+        serverInputThread.start();
+
         while(true){
             Socket connectionSocket = welcomeSocket.accept();
             connectionSockets.add(connectionSocket);
@@ -40,8 +45,8 @@ public class Server {
             System.out.println("user"+userCount + " connected");
             User currentUser = new User("user"+userCount, connectionSocket);
             users.add(currentUser);
-            ServerThreadForRead stfr = new ServerThreadForRead(connectionSocket, currentUser);
-            stfr.start();
+            ServerClientInteraction serverClientInteraction = new ServerClientInteraction(connectionSocket, currentUser);
+            serverClientInteraction.start();
         }
     }
 }

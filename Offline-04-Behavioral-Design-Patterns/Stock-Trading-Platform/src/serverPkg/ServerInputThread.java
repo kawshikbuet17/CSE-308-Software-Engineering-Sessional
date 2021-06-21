@@ -1,14 +1,9 @@
-package com.company;
+package serverPkg;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
-import java.util.List;
 import java.util.Scanner;
 
-public class NotificationThread extends Thread{
-    String toClientSentence;
+public class ServerInputThread extends Thread{
     @Override
     public void run(){
         while (true){

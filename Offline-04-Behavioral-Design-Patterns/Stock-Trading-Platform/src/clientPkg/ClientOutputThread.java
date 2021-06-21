@@ -1,4 +1,4 @@
-package com.company;
+package clientPkg;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -6,19 +6,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-public class ClientThreadForRead extends Thread {
-    Socket clientSocket;
-    public ClientThreadForRead(Socket clientSocket){
+public class ClientOutputThread extends Thread {
+    private Socket clientSocket;
+    public ClientOutputThread(Socket clientSocket){
         this.clientSocket = clientSocket;
     }
     @Override
     public void run() {
-        String modifiedSentence;
+        String receiveFromServer;
         try (BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()))) {
             while (true) {
-                modifiedSentence = inFromServer.readLine();
-                System.out.print(">>");
-                System.out.println(modifiedSentence);
+                receiveFromServer = inFromServer.readLine();
+                System.out.println(receiveFromServer);
                 System.out.flush();
             }
         } catch (IOException e) {

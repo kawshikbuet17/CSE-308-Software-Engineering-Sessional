@@ -1,4 +1,6 @@
-package com.company;
+package stockPkg;
+
+import userPkg.User;
 
 public interface IStock {
     String getName();
@@ -9,5 +11,5 @@ public interface IStock {
     void ChangeCount(int i);
     void Register(User u);
     void UnRegister(User u);
-    void NofifySubscribers();
+    void NofifySubscribers(String msg);
 }

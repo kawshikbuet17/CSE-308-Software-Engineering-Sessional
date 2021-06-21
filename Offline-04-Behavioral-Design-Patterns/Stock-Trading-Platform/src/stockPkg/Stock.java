@@ -1,4 +1,6 @@
-package com.company;
+package stockPkg;
+
+import userPkg.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,9 +9,10 @@ public class Stock implements IStock{
     private String name;
     private int count;
     private double price;
-    List<User> subscriber = new ArrayList<User>();
+    private List<User> subscriber;
 
     public Stock(String name, int count, double price) {
+        subscriber = new ArrayList<User>();
         this.name = name;
         this.count = count;
         this.price = price;
@@ -34,19 +37,19 @@ public class Stock implements IStock{
     @Override
     public void IncreasePrice(double d) {
         this.price += d;
-        NofifySubscribers();
+        NofifySubscribers("Price Increased");
     }
 
     @Override
     public void DecreasePrice(double d) {
         this.price-=d;
-        NofifySubscribers();
+        NofifySubscribers("Price Decreased");
     }
 
     @Override
     public void ChangeCount(int i) {
         this.count = i;
-        NofifySubscribers();
+        NofifySubscribers("Count Changed");
     }
 
     @Override
@@ -60,9 +63,9 @@ public class Stock implements IStock{
     }
 
     @Override
-    public void NofifySubscribers() {
+    public void NofifySubscribers(String msg) {
         for(int i=0; i< subscriber.size(); i++){
-            subscriber.get(i).Update(this);
+            subscriber.get(i).Update(this, msg);
         }
     }
 }
