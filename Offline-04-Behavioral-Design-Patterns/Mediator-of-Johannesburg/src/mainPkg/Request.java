@@ -1,8 +1,10 @@
 package mainPkg;
 
+import organizationPkg.Organization;
+
 public class Request {
-    Organization organization;
-    Service service;
+    private Organization organization;
+    private Service service;
 
     public Request(Organization organization, Service service) {
         this.organization = organization;
