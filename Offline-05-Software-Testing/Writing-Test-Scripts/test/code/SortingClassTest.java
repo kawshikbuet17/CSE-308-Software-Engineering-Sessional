@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SortingClassTest {
     Random rd = new Random();
+    List<Integer> unsortedList;
+    SortingClass sortingClass;
+    List<Integer> sortedList;
     @Test
     void getSortedList() {
         testWithElementsNumber(0);  //with 0 element
@@ -20,57 +23,56 @@ class SortingClassTest {
     }
 
     void testWithElementsNumber(int num){
-        List<Integer> unsortedList = new ArrayList<>();
+        unsortedList = new ArrayList<>();
         for(int i=0; i<num; i++){
             unsortedList.add(rd.nextInt());
         }
-        SortingClass sortingClass = new SortingClass(unsortedList);
-        List<Integer> sortedList = sortingClass.getSortedList();
-        checkAll(unsortedList, sortedList);
+        sortingClass = new SortingClass(unsortedList);
+        sortedList = sortingClass.getSortedList();
+        checkAll();
     }
 
     void testAscendingCase(int num){
-        List<Integer> unsortedList = new ArrayList<>();
+        unsortedList = new ArrayList<>();
         for(int i=0; i<num; i++){
             unsortedList.add(rd.nextInt());
         }
         Collections.sort(unsortedList);
-        SortingClass sortingClass = new SortingClass(unsortedList);
-        List<Integer> sortedList = sortingClass.getSortedList();
-        checkAll(unsortedList, sortedList);
+        sortingClass = new SortingClass(unsortedList);
+        sortedList = sortingClass.getSortedList();
+        checkAll();
     }
 
     void testDescendingCase(int num){
-        List<Integer> unsortedList = new ArrayList<>();
+        unsortedList = new ArrayList<>();
         for(int i=0; i<num; i++){
             unsortedList.add(rd.nextInt());
         }
         Collections.sort(unsortedList, Collections.reverseOrder());
-        SortingClass sortingClass = new SortingClass(unsortedList);
-        List<Integer> sortedList = sortingClass.getSortedList();
-        checkAll(unsortedList, sortedList);
+        sortingClass = new SortingClass(unsortedList);
+        sortedList = sortingClass.getSortedList();
+        checkAll();
     }
 
     void testAllEqualCase(int num){
-        List<Integer> unsortedList = new ArrayList<>();
-        Random rd = new Random();
+        unsortedList = new ArrayList<>();
         int val = rd.nextInt();
         for(int i=0; i<num; i++){
             unsortedList.add(val);
         }
         Collections.sort(unsortedList);
-        SortingClass sortingClass = new SortingClass(unsortedList);
-        List<Integer> sortedList = sortingClass.getSortedList();
-        checkAll(unsortedList, sortedList);
+        sortingClass = new SortingClass(unsortedList);
+        sortedList = sortingClass.getSortedList();
+        checkAll();
     }
 
-    void checkAll(List<Integer> unsortedList, List<Integer> sortedList){
-        assertEquals(sizePreserved(unsortedList, sortedList), true);
-        assertEquals(allElementsPresent(unsortedList, sortedList), true);
-        assertEquals(correctlySorted(sortedList), true);
+    void checkAll(){
+        assertEquals(sizePreserved(), true, "Size before and after sort didn't match");
+        assertEquals(allElementsPresent(), true, "Not All Elements Present");
+        assertEquals(correctlySorted(), true, "Not Correctly Sorted");
     }
 
-    boolean sizePreserved(List<Integer> unsortedList, List<Integer> sortedList){
+    boolean sizePreserved(){
         boolean preserved = true;
         if(unsortedList.size()!=sortedList.size()){
             preserved = false;
@@ -78,7 +80,7 @@ class SortingClassTest {
         return preserved;
     }
 
-    boolean allElementsPresent(List<Integer> unsortedList, List<Integer> sortedList){
+    boolean allElementsPresent(){
         boolean present = true;
         for(int i=0; i<sortedList.size(); i++){
             if(!unsortedList.contains(sortedList.get(i))){
@@ -89,7 +91,7 @@ class SortingClassTest {
         return present;
     }
 
-    boolean correctlySorted(List<Integer> sortedList){
+    boolean correctlySorted(){
         boolean correct = true;
         for(int i=0; i<sortedList.size()-1; i++){
             if(sortedList.get(i)>sortedList.get(i+1)){
