@@ -26,8 +26,7 @@ class SortingClassTest {
         }
         SortingClass sortingClass = new SortingClass(unsortedList);
         List<Integer> sortedList = sortingClass.getSortedList();
-        assertEquals(allElementsPresent(unsortedList, sortedList), true);
-        assertEquals(correctlySorted(sortedList), true);
+        checkAll(unsortedList, sortedList);
     }
 
     void testAscendingCase(int num){
@@ -38,8 +37,7 @@ class SortingClassTest {
         Collections.sort(unsortedList);
         SortingClass sortingClass = new SortingClass(unsortedList);
         List<Integer> sortedList = sortingClass.getSortedList();
-        assertEquals(allElementsPresent(unsortedList, sortedList), true);
-        assertEquals(correctlySorted(sortedList), true);
+        checkAll(unsortedList, sortedList);
     }
 
     void testDescendingCase(int num){
@@ -50,8 +48,7 @@ class SortingClassTest {
         Collections.sort(unsortedList, Collections.reverseOrder());
         SortingClass sortingClass = new SortingClass(unsortedList);
         List<Integer> sortedList = sortingClass.getSortedList();
-        assertEquals(allElementsPresent(unsortedList, sortedList), true);
-        assertEquals(correctlySorted(sortedList), true);
+        checkAll(unsortedList, sortedList);
     }
 
     void testAllEqualCase(int num){
@@ -64,8 +61,21 @@ class SortingClassTest {
         Collections.sort(unsortedList);
         SortingClass sortingClass = new SortingClass(unsortedList);
         List<Integer> sortedList = sortingClass.getSortedList();
+        checkAll(unsortedList, sortedList);
+    }
+
+    void checkAll(List<Integer> unsortedList, List<Integer> sortedList){
+        assertEquals(sizePreserved(unsortedList, sortedList), true);
         assertEquals(allElementsPresent(unsortedList, sortedList), true);
         assertEquals(correctlySorted(sortedList), true);
+    }
+
+    boolean sizePreserved(List<Integer> unsortedList, List<Integer> sortedList){
+        boolean preserved = true;
+        if(unsortedList.size()!=sortedList.size()){
+            preserved = false;
+        }
+        return preserved;
     }
 
     boolean allElementsPresent(List<Integer> unsortedList, List<Integer> sortedList){
