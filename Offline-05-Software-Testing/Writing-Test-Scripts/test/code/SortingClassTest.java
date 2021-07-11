@@ -12,14 +12,49 @@ class SortingClassTest {
     SortingClass sortingClass;
     List<Integer> sortedList;
     @Test
-    void getSortedList() {
+    void getSortedList_test1() {
+        System.out.println("Test With Element Number = 0");
         testWithElementsNumber(0);  //with 0 element
+    }
+    @Test
+    void getSortedList_test2() {
+        System.out.println("Test With Element Number = 1");
         testWithElementsNumber(1);  //with 1 element
+    }
+    @Test
+    void getSortedList_test3() {
+        System.out.println("Test With Element Number = 2");
         testWithElementsNumber(2);  //with 2 elements
+    }
+
+    @Test
+    void getSortedList_test4() {
+        System.out.println("Test With Random Element Number");
         testWithElementsNumber(rd.nextInt(9000));   //with random size elements
-        testAscendingCase(rd.nextInt(9000));    //test with ascending
-        testDescendingCase(rd.nextInt(9000));   //test with descending
+    }
+
+    @Test
+    void getSortedList_test5() {
+        System.out.println("Test With Ascending Case");
+        testAscendingCase(10);//rd.nextInt(9000));    //test with ascending
+    }
+
+    @Test
+    void getSortedList_test6() {
+        System.out.println("Test With Descending Case");
+        testDescendingCase(10);//rd.nextInt(9000));   //test with descending
+    }
+
+    @Test
+    void getSortedList_test7() {
+        System.out.println("Test With All Equal");
         testAllEqualCase(rd.nextInt(9000));  //test with all equal
+    }
+
+    @Test
+    void getSortedList_test8() {
+        System.out.println("Test With Hardcoding");
+        testWithHardcoding();
     }
 
     void testWithElementsNumber(int num){
@@ -35,9 +70,8 @@ class SortingClassTest {
     void testAscendingCase(int num){
         unsortedList = new ArrayList<>();
         for(int i=0; i<num; i++){
-            unsortedList.add(rd.nextInt());
+            unsortedList.add(i);
         }
-        Collections.sort(unsortedList);
         sortingClass = new SortingClass(unsortedList);
         sortedList = sortingClass.getSortedList();
         checkAll();
@@ -45,10 +79,9 @@ class SortingClassTest {
 
     void testDescendingCase(int num){
         unsortedList = new ArrayList<>();
-        for(int i=0; i<num; i++){
-            unsortedList.add(rd.nextInt());
+        for(int i=num; i>0; i--){
+            unsortedList.add(i);
         }
-        Collections.sort(unsortedList, Collections.reverseOrder());
         sortingClass = new SortingClass(unsortedList);
         sortedList = sortingClass.getSortedList();
         checkAll();
@@ -60,7 +93,13 @@ class SortingClassTest {
         for(int i=0; i<num; i++){
             unsortedList.add(val);
         }
-        Collections.sort(unsortedList);
+        sortingClass = new SortingClass(unsortedList);
+        sortedList = sortingClass.getSortedList();
+        checkAll();
+    }
+
+    void testWithHardcoding(){
+        unsortedList = new ArrayList<>(Arrays.asList(5,-4,3,-2,1));
         sortingClass = new SortingClass(unsortedList);
         sortedList = sortingClass.getSortedList();
         checkAll();
@@ -81,14 +120,21 @@ class SortingClassTest {
     }
 
     boolean allElementsPresent(){
-        boolean present = true;
+        boolean present1 = true;
         for(int i=0; i<sortedList.size(); i++){
             if(!unsortedList.contains(sortedList.get(i))){
-                present = false;
+                present1 = false;
                 break;
             }
         }
-        return present;
+        boolean present2 = true;
+        for(int i=0; i<unsortedList.size(); i++){
+            if(!sortedList.contains(unsortedList.get(i))){
+                present2 = false;
+                break;
+            }
+        }
+        return present1 && present2;
     }
 
     boolean correctlySorted(){
