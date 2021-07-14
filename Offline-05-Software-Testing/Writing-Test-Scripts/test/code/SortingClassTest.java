@@ -134,7 +134,33 @@ class SortingClassTest {
                 break;
             }
         }
-        return present1 && present2;
+
+        Map<Integer, Integer> hm =  new HashMap<Integer, Integer>();
+        for(int i=0; i<unsortedList.size(); i++){
+            hm.put(unsortedList.get(i), 0);
+        }
+        for(int i=0; i<unsortedList.size(); i++){
+            hm.put(unsortedList.get(i), hm.get(unsortedList.get(i))+1);
+        }
+
+        Map<Integer, Integer> hm2 =  new HashMap<Integer, Integer>();
+        for(int i=0; i<sortedList.size(); i++){
+            hm2.put(sortedList.get(i), 0);
+        }
+        for(int i=0; i<sortedList.size(); i++){
+            hm2.put(sortedList.get(i), hm2.get(sortedList.get(i))+1);
+        }
+
+        boolean present = true;
+        for(int i = 0; i<unsortedList.size(); i++){
+//            System.out.println("from 1: "+unsortedList.get(i)+" = "+hm.get(unsortedList.get(i)));
+//            System.out.println("from 2: "+unsortedList.get(i)+" = "+hm2.get(unsortedList.get(i)));
+            if(!hm.get(unsortedList.get(i)).equals(hm2.get(unsortedList.get(i)))){
+                present = false;
+                break;
+            }
+        }
+        return present1 && present2 && present;
     }
 
     boolean correctlySorted(){
